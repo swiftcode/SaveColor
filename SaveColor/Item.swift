@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
-struct Item {
-    var id: UUID
+@Model
+final class Item {
+    var id: UUID = UUID()
     var name: String
     
     var red: Double = 0.0
@@ -20,15 +22,14 @@ struct Item {
         Color(red: red, green: green, blue: blue, opacity: alpha)
     }
     
-    init(id: UUID = UUID(), name: String) {
-        self.id = id
+    init(name: String) {
         self.name = name
     }
 }
 
 extension Item {
-    static var emptyIten: Item {
-        Item(id: UUID(), name: "")
+    static var emptyItem: Item {
+        Item(name: "")
     }
 }
 
