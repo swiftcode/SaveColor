@@ -35,12 +35,7 @@ extension Item {
 
 extension Color {
     var components: (red: Double, green: Double, blue: Double, alpha: Double) {
-        var red: CGFloat = 0.0
-        var green: CGFloat = 0.0
-        var blue: CGFloat = 0.0
-        var alpha: CGFloat = 0.0
-        
-        #if canImport(UIKIT)
+        #if canImport(UIKit)
         let uiColor = UIColor(self)
         var red: CGFloat = 0.0
         var green: CGFloat = 0.0
