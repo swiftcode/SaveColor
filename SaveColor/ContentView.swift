@@ -12,6 +12,7 @@ struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Item.name) private var items: [Item]
     @State private var isPresentedItemView: Bool = false
+    @State private var errorDeletingItem: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -24,10 +25,9 @@ struct ContentView: View {
                             .stroke(.black, lineWidth: 2)
                             .fill(item.color)
                             .frame(width: 30.0, height: 30.0)
-                        
-                        let _ = print("item.color:-> \(item.color)")
                     }
                 }
+                .onDelete(perform: deleteItem)
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -42,6 +42,18 @@ struct ContentView: View {
                 ItemView(isPresentingItemView: $isPresentedItemView)
             }
             .navigationTitle("Colors")
+        }
+    }
+    
+    fileprivate func deleteItem(_ indexSet: IndexSet) {
+        for index in indexSet {
+            modelContext.delete(items[index])
+            
+            do {
+                try modelContext.save()
+            } catch {
+                errorDeletingItem = true
+            }
         }
     }
 }
